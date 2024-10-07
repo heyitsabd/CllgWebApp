@@ -1,10 +1,16 @@
+import AddCollege from "./AddCollege";
 import "./App.css";
+import Colleges from "./Colleges";
 import HomePage from "./HomePage";
 
 function App() {
   return (
     <div>
-        <HomePage />
+      {/* <div> */}
+        {/* <HomePage /> */}
+      {/* </div> */}
+      <Colleges/>
+      {/* <AddCollege/> */}
     </div>
   );
 }
