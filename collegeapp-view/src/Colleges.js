@@ -8,7 +8,7 @@ function Colleges() {
   return (
     <div>
       <BrowserRouter>
-      {/* <AddCollege/> */}
+      
         <Routes>
         <Route path="/" element={<AddCollege/>} />
           <Route path="/colleges" element={<CollegeDetailCard />} />

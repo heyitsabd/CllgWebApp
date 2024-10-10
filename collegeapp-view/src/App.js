@@ -7,9 +7,9 @@ function App() {
   return (
     <div>
       {/* <div> */}
-        {/* <HomePage /> */}
+        <HomePage />
       {/* </div> */}
-      <Colleges/>
+      {/* <Colleges/> */}
       {/* <AddCollege/> */}
     </div>
   );

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @CrossOrigin("http://localhost:3000/")
@@ -44,6 +46,17 @@ public class CllgAppController {
         return "Saved successfully";
     }
 
+    @PostMapping("/signUp")
+    public String postUserData(@RequestBody UserSignUp userSignUp) {
+        try {
+            cllgAppService.userReg(userSignUp);
+        return "Saved Successfully";
+        } catch (Exception e) {
+           return "Error Occured";
+        }  
+    }
+    
+
     // @PostMapping("/colleges")
 
     // public String postCollegeData(@RequestBody List<Colleges> colleges) {
@@ -67,5 +80,16 @@ public class CllgAppController {
             return "Exception occurred";
         }
     }
+
+    @PostMapping("/login")
+    public String userLogin(@RequestBody UserLogin userLogin) {
+        try {
+             
+             return cllgAppService.loginUser(userLogin);
+        } catch (Exception e) {
+            return "error";
+        }
+    }
+    
 
 }

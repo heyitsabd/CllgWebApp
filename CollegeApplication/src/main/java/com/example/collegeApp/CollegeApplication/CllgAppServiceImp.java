@@ -15,6 +15,8 @@ public class CllgAppServiceImp implements CllgAppService {
     private CourseRepo courseRepo;
     @Autowired
     private CllgRepo cllgRepo;
+    @Autowired
+    private UserSignUpRepo userSignUpRepo;
 
     @Override
     public String createCollege(Colleges college_data) {
@@ -75,7 +77,7 @@ public class CllgAppServiceImp implements CllgAppService {
     @Override
     public Colleges readPerticularCllg(Long id) {
         CllgEntity particularCllg = cllgRepo.findById(id).get();
-      
+
         Colleges clg = new Colleges();
         clg.setAcNONAC(particularCllg.getAcNONAC());
         clg.setAccomodationFee(particularCllg.getAccomodationFee());
@@ -85,9 +87,30 @@ public class CllgAppServiceImp implements CllgAppService {
         return clg;
     }
 
-    // @Override
-    // public boolean deleteColleges(Long id) {
+    @Override
+    public String userReg(UserSignUp userSignUp) {
+        try {
+            UserSignUpEntity userSignUpEntity = new UserSignUpEntity();
+            BeanUtils.copyProperties(userSignUp, userSignUpEntity);
+            userSignUpRepo.save(userSignUpEntity);
+            return "user data saved successfully";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
 
-    // }
+    @Override
+    public String loginUser(UserLogin userLogin) {
+        String userName = userLogin.getUserName(); 
+        String password = userLogin.getPassword();
+
+        UserSignUpEntity user = userSignUpRepo.findByUserNameAndPassword(userName, password);
+
+        if (user != null) {
+            return "User Logged in";
+        } else {
+            return "Invalid credentials";
+        }
+    }
 
 }
