@@ -16,7 +16,7 @@ public class UserSignUpEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String Name;
+    private String name;
 
     @Column(unique = true)
     private String userName;

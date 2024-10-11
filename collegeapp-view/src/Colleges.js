@@ -7,13 +7,14 @@ function Colleges() {
   
   return (
     <div>
-      <BrowserRouter>
+      {/* <BrowserRouter>
       
         <Routes>
         <Route path="/" element={<AddCollege/>} />
           <Route path="/colleges" element={<CollegeDetailCard />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
+      <CollegeDetailCard/>
     </div>
   );
 }

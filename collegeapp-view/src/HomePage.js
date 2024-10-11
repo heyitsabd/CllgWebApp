@@ -1,53 +1,43 @@
-import { useState } from "react";
+import { useContext, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import LoginForm from "./LoginForm";
 import Navbar from "./Navbar";
 import SignUpForm from "./SignUpForm";
-import ThreeScene from "./ThreeScene";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Colleges from "./Colleges";
-
+import { SignUpContext } from "./userSignUpContext";
 
 function HomePage() {
-  //  const [activeForm,setActiveForm] = useState('login');
+  const { loginInfo } = useContext(SignUpContext);
+  const navigate = useNavigate();
 
-  //  const toggleForm=(formType)=>{
-  //   setActiveForm(formType);
-  //  }
-
-  const [activePage,setActiveage] = useState('login');
-
-  
+  useEffect(() => {
+    if (loginInfo) {
+      navigate("/college");
+    }
+  }, [loginInfo, navigate]);
 
   return (
-
     <div>
-      <BrowserRouter>
       <div className="z-40 relative mt-1">
-        <Navbar/>
+        <Navbar />
       </div>
-      
-      <div className="flex w-screen overflow-hidden top-0 fixed">
-      <div className="w-3/6">
-        <Routes>
-        
-        {
-          activePage==='login'?<Route path={'/'} element={<LoginForm/>} />:<Route path={'/'} element={<Colleges/>} />
-        }
-        <Route path={'/login'} element={<LoginForm/>} />
-        <Route path={'/signup'} element={<SignUpForm/>}/>
-          {/* {
-            activeForm==='login'?<LoginForm/>:<SignUpForm/>
-          } */}
 
-       
-        </Routes>
-        </div>
-        <div className="w-3/6 -z-10">
-          <ThreeScene />
+      <div className="flex w-screen overflow-hidden top-0 fixed">
+        <div className="w-3/6">
+          <Routes>
+            {!loginInfo ? (
+              <>
+                <Route path="/" element={<LoginForm />} />
+                <Route path="/login" element={<LoginForm />} />
+                <Route path="/signup" element={<SignUpForm />} />
+              </>
+            ) : (
+              <Route path="/college" element={<Colleges />} />
+            )}
+          </Routes>
         </div>
       </div>
-      </BrowserRouter>
     </div>
   );
 }

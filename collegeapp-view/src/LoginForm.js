@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import LoginService from './services/LoginService';
 import { useNavigate } from 'react-router-dom';
+import { SignUpContext, SignUpProvider } from './userSignUpContext';
 
 function LoginForm() {
+  const {setLoginInfo} = useContext(SignUpContext)
 
   const navigate = useNavigate()
 
@@ -24,10 +26,11 @@ function LoginForm() {
     
     LoginService.loginUser(loginData)
     .then((res) => {
-      console.log(res)
+      // console.log(res)
       if (res.data === "User Logged in") {  // Change to check the actual response from the backend
         console.log('Logged IN');
-        navigate('/signup');
+        setLoginInfo(true);
+        navigate('/college');
     } else {
         console.log('Invalid credentials');
         // Show an error message in the UI instead of navigating to '/login'
@@ -42,6 +45,7 @@ function LoginForm() {
   
 
   return (
+    <SignUpProvider>
     <div>
       <div className="flex min-h-full w- flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -51,7 +55,7 @@ function LoginForm() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form onSubmit={loginUser} action="#" method="POST" className="space-y-6">
+          <form onSubmit={loginUser} method="POST" className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
@@ -108,6 +112,7 @@ function LoginForm() {
         </div>
       </div>
     </div>
+    </SignUpProvider>
   )
 }
 
