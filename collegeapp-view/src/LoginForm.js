@@ -30,7 +30,7 @@ function LoginForm() {
       if (res.data === "User Logged in") {  // Change to check the actual response from the backend
         console.log('Logged IN');
         setLoginInfo(true);
-        navigate('/college');
+        navigate('/');
     } else {
         console.log('Invalid credentials');
         // Show an error message in the UI instead of navigating to '/login'

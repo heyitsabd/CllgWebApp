@@ -1,21 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import CollegeDetailCard from "./CollegeDetailCard";
-import { BrowserRouter, Routes, Route } from "react-router-dom"; // Import Routes
 import AddCollege from "./AddCollege";
+import { Routes, Route } from "react-router-dom";
+import { SignUpContext } from "./userSignUpContext";
 
 function Colleges() {
-  
+  const { loginInfo } = useContext(SignUpContext);
+
   return (
-    <div>
-      {/* <BrowserRouter>
-      
-        <Routes>
-        <Route path="/" element={<AddCollege/>} />
-          <Route path="/colleges" element={<CollegeDetailCard />} />
-        </Routes>
-      </BrowserRouter> */}
-      <CollegeDetailCard/>
-    </div>
+    <Routes>
+      {loginInfo ? (
+        <>
+          <Route path="/" element={<CollegeDetailCard />} />
+          <Route path="/addCollege" element={<AddCollege />} />
+        </>
+      ) : (
+        <p>Please log in to view college details.</p>
+      )}
+    </Routes>
   );
 }
 

@@ -10,9 +10,9 @@ function App() {
     <SignUpProvider>
       
         {/* <div> */}
-        <Router>
+        {/* <Router> */}
           <HomePage />
-        </Router>
+        {/* </Router> */}
         {/* </div> */}
         {/* <Colleges/> */}
         {/* <AddCollege/> */}

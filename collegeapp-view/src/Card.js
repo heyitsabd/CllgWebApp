@@ -22,7 +22,7 @@ function Card() {
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
-            viewBox="0 0 14 10"
+            viewBox="0 0 14 10" 
           >
             <path
               stroke="currentColor"

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import CllgService from './services/CllgService';
+import { SignUpContext } from "./userSignUpContext";
+
 
 function AddCollege() {
   const [formData, setFormData] = useState({
@@ -11,6 +13,8 @@ function AddCollege() {
     accomodationFee: "",
     courseFee: "",
   });
+
+  const { loginInfo } = useContext(SignUpContext);
 
   const navigate = useNavigate(); // Initialize useNavigate
 
@@ -35,6 +39,7 @@ function AddCollege() {
   };
 
   return (
+    
     <div>
       <div className="text-center m-4">
         <p className="text-4xl font-bold text-green-500">Enter College Details</p>
