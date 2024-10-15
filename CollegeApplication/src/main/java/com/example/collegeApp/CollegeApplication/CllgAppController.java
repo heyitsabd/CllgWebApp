@@ -49,27 +49,13 @@ public class CllgAppController {
     @PostMapping("/signUp")
     public String postUserData(@RequestBody UserSignUp userSignUp) {
         try {
-            cllgAppService.userReg(userSignUp);
+            String response = cllgAppService.userReg(userSignUp);
+            System.out.println("Response: " + response);  // Add this log
         return "Saved Successfully";
         } catch (Exception e) {
            return "Error Occured";
         }  
     }
-    
-
-    // @PostMapping("/colleges")
-
-    // public String postCollegeData(@RequestBody List<Colleges> colleges) {
-    // try {
-    // for (Colleges cllg : colleges) {
-    // cllgAppService.createCollege(cllg);
-    // }
-    // return "Saved cllg data successfully :)";
-    // } catch (Exception e) {
-    // return "exception occured";
-    // }
-
-    // }
 
     @PostMapping("/colleges")
     public String postCollegeData(@RequestBody Colleges college) { // Changed to accept a single Colleges object

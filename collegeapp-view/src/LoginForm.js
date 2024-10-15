@@ -24,6 +24,24 @@ function LoginForm() {
   const loginUser = (e) => {
     e.preventDefault();
     
+    var secretCode;
+if (loginData.userName === 'admin') {
+  LoginService.loginUser(loginData)
+    .then(() => {
+      secretCode = prompt('Please Enter your secret code', '');
+      if (secretCode === '123') {
+        setLoginInfo(true);
+        navigate('/');
+      } else {
+        alert('Wrong credentials');
+      }
+    })
+    .catch((error) => {
+      console.error('Login failed', error);
+    });
+}
+
+
     LoginService.loginUser(loginData)
     .then((res) => {
       // console.log(res)

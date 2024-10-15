@@ -6,10 +6,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Table(name="user_credentials")
 public class UserSignUpEntity {
     @Id
@@ -20,6 +28,8 @@ public class UserSignUpEntity {
 
     @Column(unique = true)
     private String userName;
-    private String password; // Changed to lowercase 'password'
+    private String password; 
+    
+    private Boolean isAdmin;
 }
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import LoginForm from "./LoginForm";
@@ -6,22 +6,18 @@ import SignUpForm from "./SignUpForm";
 import Colleges from "./Colleges";
 import AddCollege from "./AddCollege";
 import { SignUpContext } from "./userSignUpContext";
+import Navbar from "./Navbar";
 
 function HomePage() {
   const { loginInfo } = useContext(SignUpContext);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   // Check if loginInfo exists, and if the user is on login/signup route
-  //   if (loginInfo && (window.location.pathname === "/" || window.location.pathname === "/login" || window.location.pathname === "/signup")) {
-  //     navigate("/"); // Only navigate to home page if on login/signup routes
-  //   }
-  // }, [loginInfo, navigate]);
-
   return (
     <div>
+      {!loginInfo ? <Navbar /> : ""}
+
       {!loginInfo ? (
-        <div className="flex w-screen h-screen items-center justify-center overflow-hidden top-0 fixed">
+        <div className="flex w-screen h-screen justify-center overflow-hidden fixed ">
           <div className="w-3/6">
             <Routes>
               <Route path="/" element={<LoginForm />} />
@@ -32,10 +28,11 @@ function HomePage() {
         </div>
       ) : (
         <div className="flex space-y-10">
+          {/* Hide Navbar when logged in */}
           <div className="flex-col w-full">
             <Routes>
               <Route path="/" element={<Colleges />} />
-              <Route path="/addCollege" element={<AddCollege />} /> {/* Ensure route exists */}
+              <Route path="/addCollege" element={<AddCollege />} />
             </Routes>
           </div>
         </div>
