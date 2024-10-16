@@ -9,7 +9,7 @@ function SignUpForm() {
     name: "",
     userName: "",
     password: "",
-    isAdmin: false, // Initial state
+    isAdmin: false,
   });
 
   // console.log("Submitting data:", userData);
@@ -17,23 +17,15 @@ function SignUpForm() {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Debugging log to check the checkbox state and other fields
-    // console.log(`Name: ${name}, Type: ${type}, Value: ${value}, Checked: ${checked}`);
-
     setUserData({
       ...userData,
-      [name]: type === 'checkbox' ? checked : value, // Proper handling of checkbox
+      [name]: type === 'checkbox' ? checked : value, 
     });
 
-    // Check if isAdmin is getting updated
-    // console.log("Updated userData:", userData);
   };
 
   const signUpFormSubmit = (e) => {
     e.preventDefault();
-
-    // Log final state before submission
-    // console.log("Submitting user data:", userData);
 
     userSignupService.signUpuser(userData)
       .then((res) => {

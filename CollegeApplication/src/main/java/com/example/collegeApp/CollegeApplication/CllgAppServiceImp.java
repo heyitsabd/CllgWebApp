@@ -104,9 +104,16 @@ public class CllgAppServiceImp implements CllgAppService {
         String userName = userLogin.getUserName(); 
         String password = userLogin.getPassword();
 
+        
+        
         UserSignUpEntity user = userSignUpRepo.findByUserNameAndPassword(userName, password);
+        UserSignUpEntity admin = userSignUpRepo.findAdminUser(userName, password);
 
-        if (user != null) {
+        
+
+        
+
+        if (user!=null||admin!=null) {
             return "User Logged in";
         } else {
             return "Invalid credentials";
