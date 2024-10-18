@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CllgService from './services/CllgService';
 import { useNavigate } from 'react-router-dom';
+import {SignUpContext,SignUpProvider} from './userSignUpContext'
 
 function CollegeDetailCard() {
   const [cllgDetails, getCllgDetails] = useState(null);
@@ -9,6 +10,8 @@ function CollegeDetailCard() {
   const handleOnclick=()=>{
     navigate('/addCollege')
   }
+
+  const{isItAdmin} = useContext(SignUpContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +27,13 @@ function CollegeDetailCard() {
 
   return (
     <div className="flex flex-wrap justify-center"> {/* Flex container for horizontal layout */}
-    <button onClick={handleOnclick} > Add cllg </button>
+    {
+      isItAdmin?
+      <button onClick={handleOnclick} > Add cllg </button>
+      :
+      ''
+    }
+    
       {cllgDetails != null ? (
         cllgDetails.map((val) => (
           <div

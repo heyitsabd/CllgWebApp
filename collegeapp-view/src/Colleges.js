@@ -1,11 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import CollegeDetailCard from "./CollegeDetailCard";
 import AddCollege from "./AddCollege";
 import { Routes, Route } from "react-router-dom";
 import { SignUpContext } from "./userSignUpContext";
 
 function Colleges() {
-  const { loginInfo } = useContext(SignUpContext);
+  const { loginInfo,setLoginInfo } = useContext(SignUpContext);
+
+  // useEffect(()=>{
+    
+  // })
 
   return (
     <Routes>
