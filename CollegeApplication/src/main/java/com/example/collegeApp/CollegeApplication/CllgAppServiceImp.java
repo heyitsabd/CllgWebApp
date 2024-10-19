@@ -25,13 +25,10 @@ public class CllgAppServiceImp implements CllgAppService {
 
         BeanUtils.copyProperties(college_data, cllgEntity);
 
-        // Only set courseFee if the course name matches
         if (coursesEntity != null) {
-            // Course name matches, assign course fee
             cllgEntity.setCourseFee(coursesEntity.getCourseFee());
         } else {
-            // Handle case where course name does not match (optional)
-            cllgEntity.setCourseFee(null); // or set a default value if needed
+            cllgEntity.setCourseFee(null);
         }
         cllgRepo.save(cllgEntity);
         return "Cllg created";
@@ -51,6 +48,7 @@ public class CllgAppServiceImp implements CllgAppService {
         List<Colleges> colleges = new ArrayList<>();
         for (CllgEntity collegesData : collegesDataList) {
             Colleges clg = new Colleges();
+            clg.setId(collegesData.getId());
             clg.setAcNONAC(collegesData.getAcNONAC());
             clg.setAccomodationFee(collegesData.getAccomodationFee());
             clg.setCollegeName(collegesData.getCollegeName());

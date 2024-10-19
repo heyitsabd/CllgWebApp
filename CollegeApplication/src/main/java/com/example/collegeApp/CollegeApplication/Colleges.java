@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Colleges {
+    private Long id;
     private String collegeName;
     private String courseName;
     private Float duration;

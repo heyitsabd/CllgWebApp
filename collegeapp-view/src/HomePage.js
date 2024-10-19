@@ -7,6 +7,7 @@ import Colleges from "./Colleges";
 import AddCollege from "./AddCollege";
 import { SignUpContext } from "./userSignUpContext";
 import Navbar from "./Navbar";
+import CollegePage from "./CollegePage";
 
 function HomePage() {
   const { loginInfo } = useContext(SignUpContext);
@@ -31,8 +32,9 @@ function HomePage() {
           {/* Hide Navbar when logged in */}
           <div className="flex-col w-full">
             <Routes>
-              <Route path="/" element={<Colleges />} />
+              <Route path="*" element={<Colleges />} />
               <Route path="/addCollege" element={<AddCollege />} />
+              <Route path="/collegePage/:id" element={<CollegePage />} />
             </Routes>
           </div>
         </div>
