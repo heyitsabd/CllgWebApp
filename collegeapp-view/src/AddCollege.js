@@ -1,8 +1,8 @@
-import React, { useState,useContext } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom"; 
 import CllgService from './services/CllgService';
+import CourseService from "./services/CourseService";
 import { SignUpContext } from "./userSignUpContext";
-
 
 function AddCollege() {
   const [formData, setFormData] = useState({
@@ -12,11 +12,23 @@ function AddCollege() {
     acNONAC: false,
     accomodationFee: "",
     courseFee: "",
+    image: null, // Add image field
   });
 
+  const [courses, setCourses] = useState([]); // Store courses in an array
   const { loginInfo } = useContext(SignUpContext);
+  const navigate = useNavigate(); 
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  useEffect(() => {
+    // Fetch courses when component mounts
+    CourseService.getCourses()
+      .then((res) => {
+        setCourses(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []); // Empty dependency array means it runs once on mount
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -26,12 +38,27 @@ function AddCollege() {
     });
   };
 
+  // Handle image upload
+  const handleImageChange = (e) => {
+    setFormData({
+      ...formData,
+      image: e.target.files[0], // Get the uploaded file
+    });
+  };
+
   const saveCllgData = (e) => {
     e.preventDefault();
-    CllgService.saveCllg(formData)
+    
+    // Create FormData to handle image upload
+    const formDataToSubmit = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataToSubmit.append(key, value);
+    });
+
+    CllgService.saveCllg(formDataToSubmit)
       .then((res) => {
-        console.log(formData);
-        navigate("/colleges"); 
+        console.log(res.data);
+        navigate("/"); 
       })
       .catch((error) => {
         console.log(error);
@@ -39,7 +66,6 @@ function AddCollege() {
   };
 
   return (
-    
     <div>
       <div className="text-center m-4">
         <p className="text-4xl font-bold text-green-500">Enter College Details</p>
@@ -62,14 +88,20 @@ function AddCollege() {
 
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">Course Name</label>
-          <input
-            type="text"
+          <select
             name="courseName"
             value={formData.courseName}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
-          />
+          >
+            <option value="" disabled>Select a course</option>
+            {courses.map((course, index) => (
+              <option key={index} value={course.courseName}>
+                {course.courseName}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="mb-4">
@@ -109,15 +141,15 @@ function AddCollege() {
           />
         </div>
 
+        {/* Image Upload Field */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Course Fee</label>
+          <label className="block text-gray-700 font-bold mb-2">Upload Image</label>
           <input
-            type="number"
-            name="courseFee"
-            value={formData.courseFee}
-            onChange={handleChange}
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
           />
         </div>
 

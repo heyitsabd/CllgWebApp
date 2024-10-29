@@ -13,4 +13,7 @@ public class Colleges {
     private Float duration;
     private Boolean acNONAC;
     private Long accomodationFee;
+    private Long courseFee;
+    private byte[] image;
+    
 }

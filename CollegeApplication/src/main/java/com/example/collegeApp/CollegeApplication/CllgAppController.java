@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin("http://localhost:3000/")
@@ -50,17 +51,35 @@ public class CllgAppController {
     public String postUserData(@RequestBody UserSignUp userSignUp) {
         try {
             String response = cllgAppService.userReg(userSignUp);
-            System.out.println("Response: " + response);  // Add this log
-        return "Saved Successfully";
+            System.out.println("Response: " + response); // Add this log
+            return "Saved Successfully";
         } catch (Exception e) {
-           return "Error Occured";
-        }  
+            return "Error Occured";
+        }
     }
 
     @PostMapping("/colleges")
-    public String postCollegeData(@RequestBody Colleges college) { // Changed to accept a single Colleges object
+    public String postCollegeData(
+            @RequestParam("collegeName") String collegeName,
+            @RequestParam("courseName") String courseName,
+            @RequestParam("duration") Float duration,
+            @RequestParam("acNONAC") Boolean acNONAC,
+            @RequestParam("accomodationFee") Long accomodationFee,
+            // @RequestParam("courseFee") Long courseFee,
+            @RequestPart("image") MultipartFile image) {
+        Colleges college = new Colleges();
+        college.setCollegeName(collegeName);
+        college.setCourseName(courseName);
+        college.setDuration(duration);
+        college.setAcNONAC(acNONAC);
+        college.setAccomodationFee(accomodationFee);
+        // college.setCourseFee(courseFee);
+
         try {
-            cllgAppService.createCollege(college); // Saving a single college object
+            if (image != null) {
+                college.setImage(image.getBytes());
+            }
+            cllgAppService.createCollege(college);
             return "Saved college data successfully :)";
         } catch (Exception e) {
             return "Exception occurred";
@@ -70,12 +89,11 @@ public class CllgAppController {
     @PostMapping("/login")
     public String userLogin(@RequestBody UserLogin userLogin) {
         try {
-             
-             return cllgAppService.loginUser(userLogin);
+
+            return cllgAppService.loginUser(userLogin);
         } catch (Exception e) {
             return "error";
         }
     }
-    
 
 }
