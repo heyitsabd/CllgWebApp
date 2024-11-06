@@ -5,6 +5,7 @@ import { SignUpContext } from "./userSignUpContext";
 
 function CollegeDetailCard() {
   const [cllgDetails, getCllgDetails] = useState(null);
+  
   const navigate = useNavigate();
   const { setLoginInfo } = useContext(SignUpContext);
   const { isItAdmin } = useContext(SignUpContext);
@@ -17,6 +18,7 @@ function CollegeDetailCard() {
     const fetchData = async () => {
       try {
         const response = await CllgService.getCllg();
+      
         getCllgDetails(response.data);
       } catch (error) {
         console.log(error);

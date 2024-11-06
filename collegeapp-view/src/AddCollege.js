@@ -12,15 +12,14 @@ function AddCollege() {
     acNONAC: false,
     accomodationFee: "",
     courseFee: "",
-    image: null, // Add image field
   });
 
-  const [courses, setCourses] = useState([]); // Store courses in an array
+  const [imageFile, setImageFile] = useState(null);
+  const [courses, setCourses] = useState([]);
   const { loginInfo } = useContext(SignUpContext);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch courses when component mounts
     CourseService.getCourses()
       .then((res) => {
         setCourses(res.data);
@@ -28,7 +27,7 @@ function AddCollege() {
       .catch((error) => {
         console.log(error);
       });
-  }, []); // Empty dependency array means it runs once on mount
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -38,27 +37,27 @@ function AddCollege() {
     });
   };
 
-  // Handle image upload
   const handleImageChange = (e) => {
-    setFormData({
-      ...formData,
-      image: e.target.files[0], // Get the uploaded file
-    });
+    setImageFile(e.target.files[0]);
   };
 
   const saveCllgData = (e) => {
     e.preventDefault();
     
-    // Create FormData to handle image upload
     const formDataToSubmit = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSubmit.append(key, value);
     });
 
+    // Append the image file if selected
+    if (imageFile) {
+      formDataToSubmit.append("image", imageFile);
+    }
+
     CllgService.saveCllg(formDataToSubmit)
       .then((res) => {
         console.log(res.data);
-        navigate("/"); 
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -141,7 +140,6 @@ function AddCollege() {
           />
         </div>
 
-        {/* Image Upload Field */}
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">Upload Image</label>
           <input

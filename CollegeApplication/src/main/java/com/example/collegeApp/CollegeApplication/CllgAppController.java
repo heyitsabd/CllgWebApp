@@ -3,6 +3,7 @@ package com.example.collegeApp.CollegeApplication;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +40,13 @@ public class CllgAppController {
         return cllgAppService.readPerticularCllg(id);
     }
 
+    @GetMapping("/colleges/images/{id}")
+    public ResponseEntity<byte[]> getImageById(@PathVariable Long id) {
+        Colleges img = cllgAppService.readPerticularCllg(id);
+        byte[] imageFile = img.getImage();
+        return ResponseEntity.ok().body(imageFile);
+    }
+
     @PostMapping("/courses")
     public String postCourseData(@RequestBody List<Courses> coursesData) {
         for (Courses course : coursesData) {
@@ -50,11 +58,9 @@ public class CllgAppController {
     @PostMapping("/signUp")
     public String postUserData(@RequestBody UserSignUp userSignUp) {
         try {
-            String response = cllgAppService.userReg(userSignUp);
-            System.out.println("Response: " + response); // Add this log
-            return "Saved Successfully";
+            return cllgAppService.userReg(userSignUp);
         } catch (Exception e) {
-            return "Error Occured";
+            return "Error Occurred: " + e.getMessage();
         }
     }
 
@@ -65,7 +71,6 @@ public class CllgAppController {
             @RequestParam("duration") Float duration,
             @RequestParam("acNONAC") Boolean acNONAC,
             @RequestParam("accomodationFee") Long accomodationFee,
-            // @RequestParam("courseFee") Long courseFee,
             @RequestPart("image") MultipartFile image) {
         Colleges college = new Colleges();
         college.setCollegeName(collegeName);
@@ -73,27 +78,23 @@ public class CllgAppController {
         college.setDuration(duration);
         college.setAcNONAC(acNONAC);
         college.setAccomodationFee(accomodationFee);
-        // college.setCourseFee(courseFee);
 
         try {
             if (image != null) {
                 college.setImage(image.getBytes());
             }
-            cllgAppService.createCollege(college);
-            return "Saved college data successfully :)";
+            return cllgAppService.createCollege(college);
         } catch (Exception e) {
-            return "Exception occurred";
+            return "Exception occurred: " + e.getMessage();
         }
     }
 
     @PostMapping("/login")
     public String userLogin(@RequestBody UserLogin userLogin) {
         try {
-
             return cllgAppService.loginUser(userLogin);
         } catch (Exception e) {
-            return "error";
+            return "Error: " + e.getMessage();
         }
     }
-
 }

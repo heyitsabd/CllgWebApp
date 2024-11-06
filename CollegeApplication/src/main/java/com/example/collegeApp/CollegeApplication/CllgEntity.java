@@ -10,8 +10,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
-@Data
 @Entity
+@Data
 @Table(name="cllg_db",
 uniqueConstraints = {@UniqueConstraint(columnNames = {"collegeName", "courseName"})})
 public class CllgEntity {
@@ -29,8 +29,4 @@ public class CllgEntity {
     private Long courseFee; 
     @Lob
     private byte[] image;
-
-    public String getImageBase64(){
-        return Base64.getEncoder().encodeToString(this.image);
-    }
 }

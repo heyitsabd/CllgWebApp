@@ -1,7 +1,7 @@
 package com.example.collegeApp.CollegeApplication;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import jakarta.persistence.Lob;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -14,6 +14,6 @@ public class Colleges {
     private Boolean acNONAC;
     private Long accomodationFee;
     private Long courseFee;
+    @Lob
     private byte[] image;
-    
 }
